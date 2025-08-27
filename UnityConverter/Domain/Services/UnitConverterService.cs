@@ -6,8 +6,6 @@ namespace UnityConverter.Domain.Services
 {
     public class UnitConverterService : IUnitConverter
     {
-
-
         public ConversionResult Convert(double value, System.Enum fromUnit, System.Enum toUnit)
         {
             if (fromUnit.GetType() != toUnit.GetType())
