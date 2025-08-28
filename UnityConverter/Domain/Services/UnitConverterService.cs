@@ -12,15 +12,15 @@ namespace UnityConverter.Domain.Services
             {
                 throw new ArgumentException("FromUnit and ToUnit must be of the same type.");
             }
-            if (fromUnit is DistanceUnit fromDistance && toUnit is DistanceUnit toDistance)
+            if (fromUnit is Units.Distance fromDistance && toUnit is Units.Distance toDistance)
             {
                 return ConvertDistance(value, fromDistance, toDistance);
             }
-            else if (fromUnit is WeightUnit fromWeight && toUnit is WeightUnit toWeight)
+            else if (fromUnit is Units.Weight fromWeight && toUnit is Units.Weight toWeight)
             {
                 return ConvertWeight(value, fromWeight, toWeight);
             }
-            else if (fromUnit is TempUnit fromTemp && toUnit is TempUnit toTemp)
+            else if (fromUnit is Units.Temperature fromTemp && toUnit is Units.Temperature toTemp)
             {
                 return ConvertTemperature(value, fromTemp, toTemp);
             }
@@ -30,7 +30,7 @@ namespace UnityConverter.Domain.Services
             }
         }
 
-        private ConversionResult ConvertTemperature(double value, TempUnit fromTemp, TempUnit toTemp)
+        private ConversionResult ConvertTemperature(double value, Units.Temperature fromTemp, Units.Temperature toTemp)
         {
             if (fromTemp == toTemp)
             {
@@ -44,12 +44,12 @@ namespace UnityConverter.Domain.Services
 
             var convert = new Dictionary<(System.Enum, System.Enum), Func<double, double>>
             {
-                {(TempUnit.Celsius, TempUnit.Fahrenheit), v => (v * 9 / 5) + 32 },
-                {(TempUnit.Celsius, TempUnit.Kelvin), v => v + 273.15 },
-                {(TempUnit.Fahrenheit, TempUnit.Celsius), v => (v - 32) * 5 / 9 },
-                {(TempUnit.Fahrenheit, TempUnit.Kelvin), v => (v - 32) * 5 / 9 + 273.15 },
-                {(TempUnit.Kelvin, TempUnit.Celsius), v => v - 273.15 },
-                {(TempUnit.Kelvin, TempUnit.Fahrenheit), v => (v - 273.15) * 9 / 5 + 32}
+                {(Units.Temperature.Celsius, Units.Temperature.Fahrenheit), v => (v * 9 / 5) + 32 },
+                {(Units.Temperature.Celsius, Units.Temperature.Kelvin), v => v + 273.15 },
+                {(Units.Temperature.Fahrenheit, Units.Temperature.Celsius), v => (v - 32) * 5 / 9 },
+                {(Units.Temperature.Fahrenheit, Units.Temperature.Kelvin), v => (v - 32) * 5 / 9 + 273.15 },
+                {(Units.Temperature.Kelvin, Units.Temperature.Celsius), v => v - 273.15 },
+                {(Units.Temperature.Kelvin, Units.Temperature.Fahrenheit), v => (v - 273.15) * 9 / 5 + 32}
 
             };
 
@@ -63,9 +63,9 @@ namespace UnityConverter.Domain.Services
 
         }
 
-        private ConversionResult ConvertWeight(double value, WeightUnit fromWeight, WeightUnit toWeight)
+        private ConversionResult ConvertWeight(double value, Units.Weight fromWeight, Units.Weight toWeight)
         {
-            if(fromWeight == toWeight)
+            if (fromWeight == toWeight)
             {
                 return new ConversionResult
                 {
@@ -77,27 +77,28 @@ namespace UnityConverter.Domain.Services
 
             var convert = new Dictionary<(System.Enum, System.Enum), Func<double, double>>
             {
-                { (WeightUnit.Kilogram, WeightUnit.Gram), v => v * 1000 },
-                { (WeightUnit.Kilogram, WeightUnit.Pound), v => v * 2.20462 },
-                { (WeightUnit.Kilogram, WeightUnit.Ounce), v => v * 35.274 },
-                { (WeightUnit.Kilogram, WeightUnit.Ton), v => v / 907.185 },
-                { (WeightUnit.Gram, WeightUnit.Kilogram), v => v / 1000 },
-                { (WeightUnit.Gram, WeightUnit.Pound), v => v / 453.592 },
-                { (WeightUnit.Gram, WeightUnit.Ounce), v => v / 28.3495 },
-                { (WeightUnit.Gram, WeightUnit.Ton), v => v / 907185 },
-                { (WeightUnit.Pound, WeightUnit.Kilogram), v => v / 2.20462 },
-                { (WeightUnit.Pound, WeightUnit.Gram), v => v * 453.592 },
-                { (WeightUnit.Pound, WeightUnit.Ounce), v => v * 16 },
-                { (WeightUnit.Pound, WeightUnit.Ton), v => v / 2000 },
-                { (WeightUnit.Ounce, WeightUnit.Kilogram), v => v / 35.274 },
-                { (WeightUnit.Ounce, WeightUnit.Gram), v => v * 28.3495 },
-                { (WeightUnit.Ounce, WeightUnit.Pound), v => v / 16},
-                { (WeightUnit.Ounce, WeightUnit.Ton), v => v / 32000 },
-                { (WeightUnit.Ton, WeightUnit.Kilogram), v => v * 907.185 },
-                { (WeightUnit.Ton, WeightUnit.Gram), v => v * 907185 },
-                { (WeightUnit.Ton, WeightUnit.Pound), v => v * 2000 },
-                { (WeightUnit.Ton, WeightUnit.Ounce), v => v * 32000 }
-                };
+                { (Units.Weight.Kilogram, Units.Weight.Gram), v => v * 1000 },
+                { (Units.Weight.Kilogram, Units.Weight.Pound), v => v * 2.20462 },
+                { (Units.Weight.Kilogram, Units.Weight.Ounce), v => v * 35.274 },
+                { (Units.Weight.Kilogram, Units.Weight.Ton), v => v / 907.185 },
+                { (Units.Weight.Gram, Units.Weight.Kilogram), v => v / 1000 },
+                { (Units.Weight.Gram, Units.Weight.Pound), v => v / 453.592 },
+                { (Units.Weight.Gram, Units.Weight.Ounce), v => v / 28.3495 },
+                { (Units.Weight.Gram, Units.Weight.Ton), v => v / 907185 },
+                { (Units.Weight.Pound, Units.Weight.Kilogram), v => v / 2.20462 },
+                { (Units.Weight.Pound, Units.Weight.Gram), v => v * 453.592 },
+                { (Units.Weight.Pound, Units.Weight.Ounce), v => v * 16 },
+                { (Units.Weight.Pound, Units.Weight.Ton), v => v / 2000 },
+                { (Units.Weight.Ounce, Units.Weight.Kilogram), v => v / 35.274 },
+                { (Units.Weight.Ounce, Units.Weight.Gram), v => v * 28.3495 },
+                { (Units.Weight.Ounce, Units.Weight.Pound), v => v / 16},
+                { (Units.Weight.Ounce, Units.Weight.Ton), v => v / 32000 },
+                { (Units.Weight.Ton, Units.Weight.Kilogram), v => v * 907.185 },
+                { (Units.Weight.Ton, Units.Weight.Gram), v => v * 907185 },
+                { (Units.Weight.Ton, Units.Weight.Pound), v => v * 2000 },
+                { (Units.Weight.Ton, Units.Weight.Ounce), v => v * 32000 }
+
+            };
 
             return new ConversionResult
             {
@@ -107,7 +108,7 @@ namespace UnityConverter.Domain.Services
             };
         }
 
-        private ConversionResult ConvertDistance(double value, DistanceUnit fromDistance, DistanceUnit toDistance)
+        private ConversionResult ConvertDistance(double value, Units.Distance fromDistance, Units.Distance toDistance)
         {
             if (fromDistance == toDistance)
             {
@@ -122,50 +123,50 @@ namespace UnityConverter.Domain.Services
             var convert = new Dictionary<(System.Enum, System.Enum), Func<double, double>>
             {
 
-                { (DistanceUnit.Meter, DistanceUnit.Kilometer), v => v / 1000 },
-                { (DistanceUnit.Meter, DistanceUnit.Centimeter), v => v * 100 },
-                { (DistanceUnit.Meter, DistanceUnit.Millimeter), v => v * 1000 },
-                { (DistanceUnit.Meter, DistanceUnit.Mile), v => v / 1609.34 },
-                { (DistanceUnit.Meter, DistanceUnit.Yard), v => v * 1.09361 },
-                { (DistanceUnit.Meter, DistanceUnit.Foot), v => v * 3.28084 },
-                { (DistanceUnit.Meter, DistanceUnit.Inch), v => v * 39.3701 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Meter), v => v * 1000 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Centimeter), v => v * 100000 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Millimeter), v => v * 1_000_000 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Mile), v => v / 1.60934 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Yard), v => v * 1093.61 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Foot), v => v * 3280.84 },
-                { (DistanceUnit.Kilometer, DistanceUnit.Inch), v => v * 39370.1 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Meter), v => v / 100 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Kilometer), v => v / 100000 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Millimeter), v => v * 10 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Mile), v => v / 160934 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Yard), v => v / 91.44 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Foot), v => v / 30.48 },
-                { (DistanceUnit.Centimeter, DistanceUnit.Inch), v => v / 2.54 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Meter), v => v / 1000 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Kilometer), v => v / 1_000_000 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Centimeter), v => v / 10 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Mile), v => v / 1_609_340 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Yard), v => v / 914.4 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Foot), v => v / 304.8 },
-                { (DistanceUnit.Millimeter, DistanceUnit.Inch), v => v / 25.4 },
-                { (DistanceUnit.Mile, DistanceUnit.Meter), v => v * 1609.34 },
-                { (DistanceUnit.Mile, DistanceUnit.Kilometer), v => v * 1.60934 },
-                { (DistanceUnit.Mile, DistanceUnit.Centimeter), v => v * 160934 },
-                { (DistanceUnit.Mile, DistanceUnit.Millimeter), v => v * 1_609_340 },
-                { (DistanceUnit.Mile, DistanceUnit.Yard), v => v * 1760 },
-                { (DistanceUnit.Mile, DistanceUnit.Foot), v => v * 5280 },
-                { (DistanceUnit.Mile, DistanceUnit.Inch), v => v * 63360 },
-                { (DistanceUnit.Yard, DistanceUnit.Meter), v => v / 1.09361 },
-                { (DistanceUnit.Yard, DistanceUnit.Kilometer), v => v / 1093.61 },
-                { (DistanceUnit.Yard, DistanceUnit.Centimeter), v => v * 91.44 },
-                { (DistanceUnit.Yard, DistanceUnit.Millimeter), v => v * 914.4 },
-                { (DistanceUnit.Yard, DistanceUnit.Mile), v => v / 1760 },
-                { (DistanceUnit.Yard, DistanceUnit.Foot), v => v * 3 },
-                { (DistanceUnit.Yard, DistanceUnit.Inch), v => v * 36 },
-                { (DistanceUnit.Foot, DistanceUnit.Meter), v => v / 3.28084 },
-                {(DistanceUnit.Foot, DistanceUnit.Kilometer), v => v / 3280 }        
+                { (Units.Distance.Meter, Units.Distance.Kilometer), v => v / 1000 },
+                { (Units.Distance.Meter, Units.Distance.Centimeter), v => v * 100 },
+                { (Units.Distance.Meter, Units.Distance.Millimeter), v => v * 1000 },
+                { (Units.Distance.Meter, Units.Distance.Mile), v => v / 1609.34 },
+                { (Units.Distance.Meter, Units.Distance.Yard), v => v * 1.09361 },
+                { (Units.Distance.Meter, Units.Distance.Foot), v => v * 3.28084 },
+                { (Units.Distance.Meter, Units.Distance.Inch), v => v * 39.3701 },
+                { (Units.Distance.Kilometer, Units.Distance.Meter), v => v * 1000 },
+                { (Units.Distance.Kilometer, Units.Distance.Centimeter), v => v * 100000 },
+                { (Units.Distance.Kilometer, Units.Distance.Millimeter), v => v * 1_000_000 },
+                { (Units.Distance.Kilometer, Units.Distance.Mile), v => v / 1.60934 },
+                { (Units.Distance.Kilometer, Units.Distance.Yard), v => v * 1093.61 },
+                { (Units.Distance.Kilometer, Units.Distance.Foot), v => v * 3280.84 },
+                { (Units.Distance.Kilometer, Units.Distance.Inch), v => v * 39370.1 },
+                { (Units.Distance.Centimeter, Units.Distance.Meter), v => v / 100 },
+                { (Units.Distance.Centimeter, Units.Distance.Kilometer), v => v / 100000 },
+                { (Units.Distance.Centimeter, Units.Distance.Millimeter), v => v * 10 },
+                { (Units.Distance.Centimeter, Units.Distance.Mile), v => v / 160934 },
+                { (Units.Distance.Centimeter, Units.Distance.Yard), v => v / 91.44 },
+                { (Units.Distance.Centimeter, Units.Distance.Foot), v => v / 30.48 },
+                { (Units.Distance.Centimeter, Units.Distance.Inch), v => v / 2.54 },
+                { (Units.Distance.Millimeter, Units.Distance.Meter), v => v / 1000 },
+                { (Units.Distance.Millimeter, Units.Distance.Kilometer), v => v / 1_000_000 },
+                { (Units.Distance.Millimeter, Units.Distance.Centimeter), v => v / 10 },
+                { (Units.Distance.Millimeter, Units.Distance.Mile), v => v / 1_609_340 },
+                { (Units.Distance.Millimeter, Units.Distance.Yard), v => v / 914.4 },
+                { (Units.Distance.Millimeter, Units.Distance.Foot), v => v / 304.8 },
+                { (Units.Distance.Millimeter, Units.Distance.Inch), v => v / 25.4 },
+                { (Units.Distance.Mile, Units.Distance.Meter), v => v * 1609.34 },
+                { (Units.Distance.Mile, Units.Distance.Kilometer), v => v * 1.60934 },
+                { (Units.Distance.Mile, Units.Distance.Centimeter), v => v * 160934 },
+                { (Units.Distance.Mile, Units.Distance.Millimeter), v => v * 1_609_340 },
+                { (Units.Distance.Mile, Units.Distance.Yard), v => v * 1760 },
+                { (Units.Distance.Mile, Units.Distance.Foot), v => v * 5280 },
+                { (Units.Distance.Mile, Units.Distance.Inch), v => v * 63360 },
+                { (Units.Distance.Yard, Units.Distance.Meter), v => v / 1.09361 },
+                { (Units.Distance.Yard, Units.Distance.Kilometer), v => v / 1093.61 },
+                { (Units.Distance.Yard, Units.Distance.Centimeter), v => v * 91.44 },
+                { (Units.Distance.Yard, Units.Distance.Millimeter), v => v * 914.4 },
+                { (Units.Distance.Yard, Units.Distance.Mile), v => v / 1760 },
+                { (Units.Distance.Yard, Units.Distance.Foot), v => v * 3 },
+                { (Units.Distance.Yard, Units.Distance.Inch), v => v * 36 },
+                { (Units.Distance.Foot, Units.Distance.Meter), v => v / 3.28084 },
+                {(Units.Distance.Foot, Units.Distance.Kilometer), v => v / 3280 }
             };
 
             return new ConversionResult

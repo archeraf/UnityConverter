@@ -2,6 +2,6 @@
 {
     public interface IConversionService
     {
-        public double Convert(double value, string fromUnit, string toUnit);
+        public double Convert(double value,int unitType, int fromUnit, int toUnit);
     }
 }

@@ -4,7 +4,7 @@ using UnityConverter.Application.Interface;
 namespace UnityConverter.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/v1")]
     public class ConversionController : ControllerBase
     {
         private readonly IConversionService _conversionService;
@@ -13,14 +13,14 @@ namespace UnityConverter.Controllers
             _conversionService = conversionService;
         }
 
-        //TODO: Fix fromUnit and toUnit captions, 
-        [HttpGet("convert/{value}/{fromUnit}/{toUnit}")]
-        public IActionResult Convert(double value, string fromUnit, string toUnit)
+
+        [HttpGet("convert/{value}/{unitType}/{fromUnit}/{toUnit}")]
+        public IActionResult Convert(double value, int unitType, int fromUnit, int toUnit)
         {
             try
             {
-                var result = _conversionService.Convert(value, fromUnit, toUnit);
-                return Ok(new { Result = result, FromUnit = fromUnit, ToUnit = toUnit });
+                var result = _conversionService.Convert(value,unitType, fromUnit, toUnit);
+                return Ok(new { Result = result.ToString("N"), FromUnit = fromUnit, ToUnit = toUnit });
             }
             catch (ArgumentException ex)
             {
