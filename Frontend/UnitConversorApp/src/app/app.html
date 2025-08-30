@@ -1,0 +1,13 @@
+<div style="margin: 20px">
+      <h1>Unit Converter</h1>
+
+      <nav style="margin-bottom: 16px; display:flex; ">
+        <button (click)="selectedTab = 'distance'">Distance</button>
+        <button (click)="selectedTab = 'weight'">Weight</button>
+        <button (click)="selectedTab = 'temperature'">Temperature</button>
+      </nav>
+
+      <app-distance *ngIf="selectedTab === 'distance'"></app-distance>
+      <app-weight *ngIf="selectedTab === 'weight'"></app-weight>
+      <app-temperature *ngIf="selectedTab === 'temperature'"></app-temperature>
+    </div>
